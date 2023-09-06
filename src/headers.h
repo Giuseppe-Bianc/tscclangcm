@@ -34,6 +34,7 @@
 #include <spdlog/spdlog.h>
 #include <sstream>
 #include <stack>
+#include <string>
 #include <stdexcept>
 #include <string_view>
 #include <unordered_set>
