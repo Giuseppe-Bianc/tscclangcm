@@ -21,27 +21,28 @@
 #include <limits>
 #include <map>
 #include <memory>
+#include <memory_resource>
 #include <numbers>
 #include <omp.h>
 #include <optional>
 #include <random>
 #include <ranges>
-#include <string>
 #include <set>
 #include <spdlog/cfg/env.h>
+#include <spdlog/fmt/bundled/format.h>
 #include <spdlog/fmt/ostr.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
 #include <sstream>
 #include <stack>
-#include <string>
 #include <stdexcept>
+#include <string>
 #include <string_view>
 #include <unordered_set>
-#include <memory_resource>
+#include <utility>
+#include <variant>
 #include <vector>
 // clang-format on
-
 #include "casts.h"
 // Restore warning levels.
 #ifdef _MSC_VER

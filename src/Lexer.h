@@ -25,31 +25,37 @@ public:
             const char currentChar = source_.at(position_);
 
             if(std::isdigit(currentChar)) {
-                size_t start = position_;
+                const size_t start = position_;
                 while(position_ < sourceSize && std::isdigit(source_.at(position_))) {
                     ++position_;
                 }
-                tokens.emplace_back(TOKEN_INT, source_.substr(start, position_ - start));
+                tokens.emplace_back(T_INT, source_.substr(start, position_ - start));
             } else {
                 switch(currentChar) {
                 case '+':
-                    tokens.emplace_back(TOKEN_PLUS, "+");
+                    tokens.emplace_back(T_PLUS, "+");
                     break;
                 case '-':
-                    tokens.emplace_back(TOKEN_MINUS, "-");
+                    tokens.emplace_back(T_MINUS, "-");
                     break;
                 case '/':
-                    tokens.emplace_back(TOKEN_SLASH, "/");
+                    tokens.emplace_back(T_SLASH, "/");
+                    break;
+                case '%':
+                    tokens.emplace_back(T_MODULUS, "%");
+                    break;
+                case '^':
+                    tokens.emplace_back(T_CARET, "^");
                     break;
                 default:
-                    tokens.emplace_back(TOKEN_ERROR, std::string_view(&currentChar, 1));
+                    tokens.emplace_back(T_ERROR, std::string_view(&currentChar, 1));
                     break;
                 }
                 ++position_;
             }
         }
 
-        tokens.emplace_back(TokType::TOKEN_EOF, "");  // Add EOF token
+        tokens.emplace_back(TokType::T_EOF, "");  // Add EOF token
         return tokens;
     }
 

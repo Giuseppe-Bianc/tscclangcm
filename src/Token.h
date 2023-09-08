@@ -3,17 +3,16 @@
 #include "headers.h"
 
 enum class TokType {
-    TOKEN_INT,
-    TOKEN_PLUS,
-    TOKEN_MINUS,
-    TOKEN_SLASH,
-    TOKEN_EOF,
-    TOKEN_ERROR
+    T_INT,
+    T_PLUS,
+    T_MINUS,
+    T_SLASH,
+    T_CARET,
+    T_MODULUS,
+    T_EOF,
+    T_ERROR
     // Add more token types here
 };
-
-inline static constexpr std::array<const std::string_view, C_ST(TokType::TOKEN_ERROR) + 1> tokTypeStrings = {
-    "TOKEN_INT", "TOKEN_PLUS", "TOKEN_MINUS", "TOKEN_SLASH", "TOKEN_EOF", "TOKEN_ERROR"};
 
 class Token {
 public:
@@ -26,18 +25,35 @@ public:
 #pragma optimize("gt", on)
     constexpr std::string toString() const {
         if(!value.empty()) [[likely]] {
-            return std::format(R"(Token(Type: {}, Value: {}))", tokenTypeToString(type), value);
+            return std::format(R"(Token({}, Value: {}))", tokenTypeToString(type), value);
         }
-        return std::format(R"(Token(Type: {}))", tokenTypeToString(type));
+        return std::format(R"(Token({}))", tokenTypeToString(type));
     }
 
 private:
 #pragma optimize("gt", on)
     constexpr static std::string_view tokenTypeToString(TokType type) {
-        if(const auto index = C_ST(type); index < tokTypeStrings.size()) [[likely]] {
-            return tokTypeStrings[index];
+        using enum TokType;
+        switch(type) {
+        case T_INT:
+            return "T_INT";
+        case T_PLUS:
+            return "T_PLUS";
+        case T_MINUS:
+            return "T_MINUS";
+        case T_SLASH:
+            return "T_SLASH";
+        case T_CARET:
+            return "T_CARET";
+        case T_MODULUS:
+            return "T_MODULUS";
+        case T_EOF:
+            return "T_EOF";
+        case T_ERROR:
+            return "T_ERROR";
+        default:
+            return "Unknown TokenType";
         }
-        return "Unknown TokenType";
     }
 
     const TokType type;

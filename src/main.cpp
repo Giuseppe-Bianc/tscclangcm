@@ -1,10 +1,11 @@
 // clang-format off
 #include "Timer.h" //include  #inlcude "headers.h"
 #include "Lexer.h"
+#include "Parser.h"
 // clang-format on
 
-static constexpr int numRuns = 20000;  // Number of runs for averaging
-static constexpr std::string_view source = "42 + 17 / 2";
+static constexpr int numRuns = 50000;  // Number of runs for averaging
+static constexpr std::string_view source = "42 + 17 / 2 ^ 3 - 3 % 4";
 
 static void bencmark() {
     long double totalTokenizationTime = 0.0;
@@ -40,7 +41,7 @@ static void bencmark() {
 
 int main() {
     spdlog::set_pattern(R"(%^[%T] [%l] %v%$)");
-    auto console = spdlog::stdout_color_mt(R"(console)");
+    const auto console = spdlog::stdout_color_mt(R"(console)");
     spdlog::set_default_logger(console);
     bencmark();
     Lexer lexer(source.data());
@@ -55,7 +56,7 @@ int main() {
     Timer tt;
     std::stringstream tokenss;
     for(const Token &t : tokens) {
-        if(t.getType() == TokType::TOKEN_ERROR) {
+        if(t.getType() == TokType::T_ERROR) {
             LCRITICAL("token invalido non ancora suportato: {}", t.getValue());
             exit(-1);
         }
